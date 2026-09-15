@@ -1,0 +1,335 @@
+/* Kiyoon Eum — Aqua Academic
+   목차: 01 기본 설정 / 02 헤더 / 03 첫 화면 / 04 카드 / 05 연락처 / 06 모바일
+   내용·링크는 index.html에서, 디자인은 이 파일에서 변경합니다. */
+
+/* 01. 자주 바꾸는 설정 ------------------------------------------------------ */
+:root {
+  --page-width: 1160px;
+  --page-gutter: 28px;
+  --section-gap: 18px;
+  --panel-radius: 15px;
+  --text: #28486a;
+  --heading: #075397;
+  --link: #07589e;
+  --muted: #47698a;
+  --accent: #098cea;
+  --panel-fill: rgba(246, 252, 255, .91);
+  --panel-border: rgba(255, 255, 255, .97);
+  --body-font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --heading-font: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  --body-size: 15px;
+  --name-size: clamp(40px, 4.5vw, 58px);
+  --hero-height: 370px;
+  --hero-image: url("./assets/hero-aqua.png");
+  --panel-shadow: 0 3px 10px #327fba1a, 0 0 0 1px #a9dffc80, inset 0 1px 1px #ffffff;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body {
+  margin: 0;
+  min-width: 280px;
+  color: var(--text);
+  font: var(--body-size)/1.55 var(--body-font);
+  background: radial-gradient(ellipse at 14% 0, #ffffffb3 0, transparent 40%),
+    radial-gradient(ellipse at 87% 5%, #54b1ee80, transparent 48%),
+    linear-gradient(#93d3f6 0, #d6f2ff 490px, #effaff 950px, #f7fcff 100%);
+  overflow-wrap: break-word;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible { outline: 3px solid #174c85; outline-offset: 5px; border-radius: 5px; }
+::selection { color: #073d6a; background: #b7ebff; }
+h1, h2 { font-family: var(--heading-font); font-weight: 400; }
+h2 { color: var(--heading); font-size: 23px; letter-spacing: -.55px; line-height: 1.25; }
+h3 { color: var(--heading); font-size: 16px; font-weight: 500; line-height: 1.4; }
+ul { margin: 0; padding: 0; list-style: none; }
+img { display: block; max-width: 100%; }
+.site-wrap { width: min(var(--page-width), calc(100% - 2 * var(--page-gutter))); margin: 24px auto 0; }
+.glass-panel { border: 1px solid var(--panel-border); border-radius: var(--panel-radius); box-shadow: var(--panel-shadow); }
+.icon { flex-shrink: 0; width: 23px; height: 23px; }
+.skip-link { position: fixed; top: 10px; left: 10px; z-index: 10; padding: 10px 16px; background: white; border-radius: 6px; transform: translateY(-180%); }
+.skip-link:focus { transform: translateY(0); }
+
+/* 02. 헤더·물방울·메뉴 ------------------------------------------------------ */
+.site-header {
+  min-height: 82px; display: flex; align-items: center; gap: 28px;
+  padding: 13px 27px; margin-bottom: 15px;
+  background: linear-gradient(115deg, #ffffffdc, #e6f7ffc7 40%, #f2fbffb3);
+}
+.brand { display: inline-flex; align-items: center; gap: 18px; color: #073b73; font-family: var(--heading-font); font-size: 28px; letter-spacing: -.8px; white-space: nowrap; }
+.brand:hover { text-decoration: none; }
+.aqua-orb {
+  display: block; position: relative; flex-shrink: 0; border-radius: 50%;
+  border: 1px solid #91cbeb;
+  background: radial-gradient(ellipse at 32% 18%, #fff 0, #ffffffd9 5%, #ffffff00 27%),
+    radial-gradient(ellipse at 60% 80%, #96f6f8 0, #75d6f3b3 28%, #1485c21a 59%),
+    radial-gradient(ellipse at 58% 45%, #c6f8ffa6 20%, #7fd2f0 60%, #127dbb 83%, #e4fcff 91%);
+  box-shadow: inset 2px 1px 4px white, inset -3px -2px 7px #087dbd66, 0 2px 5px #2079ba24;
+}
+.aqua-orb::after { content: ""; position: absolute; inset: 5% 8% 9% 6%; border: 1px solid #ffffffa6; border-radius: inherit; box-shadow: inset 0 0 3px #e8fcff; }
+.brand-orb { width: 45px; height: 45px; }
+.main-nav { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.nav-pill, .aqua-button, .mail-button {
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #07508f; border: 1px solid #c2e7fc; border-radius: 999px;
+  background: linear-gradient(#fffffff2 0%, #edfaff 47%, #d1ecff 51%, #e1f4ff 100%);
+  box-shadow: inset 0 1px 1px white, 0 2px 5px #176bbf24;
+  transition: filter .15s ease, box-shadow .15s ease;
+}
+.nav-pill { min-height: 40px; min-width: 98px; padding: 7px 18px; font-size: 14px; }
+.nav-home, .aqua-button.primary {
+  color: white; border-color: #72cafa; text-shadow: 0 1px 2px #065a9d;
+  background: linear-gradient(#b5ecff 0%, #399de2 18%, #0871b6 30%, #0567aa 45%, #055b9c 51%, #0664a9 85%, #5fc3f8 100%);
+  box-shadow: inset 0 1px 2px #f4ffff, inset 0 -1px 2px #86dfff, 0 2px 5px #125fb32b;
+}
+.nav-pill:hover, .aqua-button:hover, .mail-button:hover { text-decoration: none; filter: brightness(1.055); box-shadow: inset 0 1px 2px white, 0 0 9px #39b6f36b; }
+.nav-pill:active, .aqua-button:active, .mail-button:active { filter: brightness(.97); }
+.mail-button { width: 40px; height: 40px; margin-left: 8px; flex-shrink: 0; }
+
+/* 03. 첫 화면: 배경과 텍스트는 독립적입니다. -------------------------------- */
+.hero {
+  position: relative; isolation: isolate; overflow: hidden;
+  min-height: var(--hero-height); display: flex; align-items: center;
+  background-color: #c0ecff;
+  background-image: var(--hero-image);
+  background-size: cover; background-position: center;
+}
+.hero::before { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, #ecfaffd9 0%, #edfaff96 33%, #edfaff38 53%, transparent 68%); }
+.hero-copy { width: 69%; padding: 33px 0 35px 62px; text-shadow: 0 1px 2px #ffffffa6; }
+.hero h1 { color: #074d8e; font-size: var(--name-size); letter-spacing: -1.8px; line-height: 1.08; margin-bottom: 10px; }
+.hero-role { color: #125990; font-size: 21px; line-height: 1.35; }
+.hero-affiliation { max-width: 490px; color: #285c88; font-size: 16px; margin-top: 5px; line-height: 1.45; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.aqua-button { min-height: 42px; padding: 8px 20px; gap: 14px; font-size: 14px; text-shadow: none; }
+.aqua-button span { font-size: 19px; line-height: 1; }
+
+/* 04. 소개·연구·논문·노트: 각 panel 클래스에서 개별 디자인 변경 가능 -------- */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--section-gap); margin-top: 22px; }
+.content-panel { min-width: 0; padding: 19px 18px 20px; background: linear-gradient(125deg, #fffffff2, var(--panel-fill) 65%, #e9f7ffd9); }
+.panel-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 17px; }
+.about-content { display: flex; align-items: center; gap: 22px; }
+.about-copy p + p { margin-top: 15px; }
+.research-list { display: grid; gap: 10px; }
+.research-item { display: flex; align-items: center; gap: 15px; border: 1px solid #fff; border-radius: 11px; padding: 8px; background: linear-gradient(110deg, #effaff, #ffffffa6); box-shadow: 0 0 0 1px #daeffa66; }
+.research-item p { font-size: 14px; color: var(--muted); margin-top: 2px; line-height: 1.45; }
+.illustration-tile { display: grid; place-items: center; width: 91px; min-height: 70px; flex-shrink: 0; border-radius: 7px; background: linear-gradient(140deg, #f6feff, #ddf3ff); border: 1px solid white; }
+.publication-list, .notes-list { display: grid; gap: 13px; }
+.publication { display: flex; gap: 14px; align-items: flex-start; border: 1px solid white; padding: 13px 11px; border-radius: 11px; background: #f5fbffb3; }
+.document-tile { display: grid; place-items: center; width: 47px; height: 57px; flex-shrink: 0; border: 1px solid #d7edff; border-radius: 9px; background: linear-gradient(#fff, #eef9ff); box-shadow: 0 1px 2px #71afd426; color: #258fdf; }
+.document-icon { width: 27px; height: 35px; filter: drop-shadow(0 1px 1px #b0ddf2); }
+.publication-copy { min-width: 0; }
+.publication h3 { font-size: 16px; }
+.publication h3 a { color: #074e91; }
+.authors { font-size: 13px; margin-top: 7px; color: #3e5e7b; }
+.paper-meta { display: flex; align-items: center; gap: 10px; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.status-badge { border: 1px solid #9bc9ec; border-radius: 999px; padding: 1px 10px; color: #165b94; background: linear-gradient(#f5fcff, #dceeff); box-shadow: inset 0 1px white; }
+.paper-links { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 9px; font-size: 13px; }
+.paper-links a { text-decoration: underline; text-decoration-color: #92bedb; text-underline-offset: 3px; }
+.paper-links a:hover { text-decoration-color: currentColor; }
+.note-item { display: flex; align-items: center; gap: 13px; padding: 15px 12px; background: #f5fbff; border: 1px solid white; border-radius: 11px; }
+.note-item:hover { background: #e9f7ff; text-decoration: none; }
+.note-title { display: block; color: var(--heading); font-size: 16px; }
+.note-description { display: block; color: var(--muted); font-size: 14px; margin-top: 3px; }
+.note-file-label { padding: 11px 7px; color: #2775b2; border: 1px solid #c0dff7; border-radius: 6px; font-size: 11px; }
+.note-arrow { margin-left: auto; }
+
+/* 05. 하단 연락처 -------------------------------------------------------- */
+.site-footer { display: flex; align-items: center; justify-content: space-between; gap: 22px; padding: 23px 3px 30px; color: #456984; font-size: 12px; }
+.footer-name { color: #174c7c; font-size: 15px; margin-bottom: 3px; }
+.footer-links { display: flex; align-items: center; flex-wrap: wrap; gap: 23px; }
+.footer-email { display: inline-flex; align-items: center; gap: 8px; }
+.footer-email .icon { width: 21px; height: 21px; }
+.last-updated { padding-left: 20px; border-left: 1px solid #b2cfdf; font-size: 11px; }
+
+/* 06. 태블릿·모바일 -------------------------------------------------------- */
+@media (max-width: 1000px) {
+  :root { --page-gutter: 22px; }
+  .site-header { padding-inline: 20px; gap: 17px; }
+  .brand { font-size: 25px; gap: 12px; }
+  .main-nav { gap: 8px; }
+  .nav-pill { min-width: 80px; padding-inline: 13px; }
+  .hero-copy { padding-left: 40px; width: 73%; }
+  .about-content { gap: 15px; }
+  .footer-links { gap: 15px; justify-content: flex-end; }
+}
+@media (max-width: 760px) {
+  :root { --page-gutter: 16px; --hero-height: 430px; --section-gap: 16px; }
+  .site-wrap { margin-top: 16px; }
+  .site-header { flex-wrap: wrap; column-gap: 10px; row-gap: 14px; padding: 15px 18px; }
+  .brand { font-size: 26px; }
+  .brand-orb { width: 37px; height: 37px; }
+  .mail-button { margin-left: auto; }
+  .main-nav { order: 3; width: 100%; margin: 0; }
+  .nav-pill { flex: 1; min-width: 0; }
+  .hero { align-items: flex-start; background-position: 59% center; }
+  .hero::before { background: linear-gradient(90deg, #edfbfff0, #edfaffb3 52%, #e7faff1a 100%); }
+  .hero-copy { width: 94%; padding: 32px 24px; }
+  .hero h1 { letter-spacing: -1.2px; font-size: 42px; }
+  .hero-role { font-size: 19px; }
+  .hero-affiliation { font-size: 15px; max-width: 360px; }
+  .hero-actions { margin-top: 29px; gap: 8px; }
+  .aqua-button { padding: 8px 15px; gap: 7px; }
+  .content-grid { grid-template-columns: 1fr; margin-top: 17px; }
+  .site-footer { align-items: flex-start; gap: 14px; }
+  .footer-links { flex-direction: column; align-items: flex-end; gap: 9px; }
+  .last-updated { border: 0; padding: 0; }
+}
+@media (max-width: 420px) {
+  :root { --page-gutter: 12px; --body-size: 14px; }
+  .brand { font-size: 23px; }
+  .site-header { padding: 13px 15px; }
+  .hero-copy { width: 100%; padding: 28px 19px 30px; }
+  .hero h1 { font-size: 36px; }
+  .hero-role { font-size: 17px; }
+  .hero-affiliation { font-size: 14px; max-width: 260px; }
+  .hero-actions { gap: 7px; }
+  .aqua-button { padding-inline: 12px; font-size: 12px; gap: 5px; }
+  .content-panel { padding: 17px 14px; }
+  .about-content { gap: 12px; }
+  .illustration-tile { width: 69px; }
+  .research-item { gap: 10px; }
+  .publication { padding: 12px 8px; gap: 10px; }
+  .publication .document-tile { width: 36px; height: 45px; }
+  .publication .document-icon { width: 23px; height: 31px; }
+  .site-footer { flex-direction: column; }
+  .footer-links { align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .nav-pill, .aqua-button, .mail-button { transition: none; }
+}
+@media print {
+  body { background: white; color: #222; }
+  .site-wrap { width: 100%; margin: 0; }
+  .glass-panel { border: 1px solid #bbb; box-shadow: none; background: white; }
+  .site-header { min-height: auto; }
+  .hero { min-height: 0; }
+  .hero::before { display: none; }
+  .hero-copy { width: 100%; padding: 25px; }
+  .content-grid { display: block; }
+  .content-panel { margin-top: 12px; break-inside: avoid; }
+}
+
+/* 07. 이 홈페이지의 콘텐츠 구성 ------------------------------------------ */
+h1, h2, h3, p { margin: 0; }
+.content-panel > h2 { margin-bottom: 19px; }
+.hero-copy { padding: 44px 0 44px 62px; width: 72%; }
+.hero h1 { font-size: var(--name-size); margin-bottom: 15px; }
+.hero-interests { margin-top: 20px; color: #285c88; font-size: 16px; }
+.hero-actions { margin-top: 26px; }
+.content-grid { align-items: start; }
+.intro-grid { align-items: stretch; }
+.portrait {
+  width: 112px; height: 112px; flex-shrink: 0; object-fit: cover;
+  border-radius: 50%; border: 4px solid white;
+  box-shadow: 0 0 0 1px #a8d8ef, 0 5px 13px #216c9b1a;
+}
+.about-content { min-height: 160px; gap: 22px; }
+.about-copy { min-width: 0; }
+.contact-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 15px; font-size: 14px; }
+.contact-link .icon { width: 19px; height: 19px; }
+.research-item { padding: 6px 9px; }
+.illustration-tile { min-height: 64px; width: 83px; }
+.papers-panel, .notes-panel { margin-top: 20px; }
+.publist { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.publication { padding: 16px; gap: 18px; }
+.paper-number {
+  width: 40px; height: 45px; flex-shrink: 0; display: grid; place-items: center;
+  color: #2377b0; font: 18px/1 var(--heading-font);
+  border: 1px solid #d2e9f7; border-radius: 8px;
+  background: linear-gradient(#fff, #e7f5ff); box-shadow: inset 0 1px 0 white;
+}
+.publication h3 { font-size: 16px; font-weight: 500; line-height: 1.45; }
+.paper-meta { display: block; margin-top: 5px; font-size: 13px; color: #486680; }
+.publinks { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 9px; }
+.tag {
+  display: inline-flex; align-items: center; gap: 9px; padding: 3px 11px;
+  font-size: 12px; color: #17598e; border-radius: 999px; border: 1px solid #bfddf1;
+  background: linear-gradient(#fff, #e6f4ff); box-shadow: inset 0 1px white;
+}
+.tag:hover { background: #dff3ff; text-decoration: none; }
+.details-grid { grid-template-columns: .85fr 1.15fr; margin-top: 20px; }
+.talklist { display: grid; gap: 10px; }
+details.cv, details.talk { border: 1px solid #cfe7f5; border-radius: 10px; overflow: hidden; background: #ffffffa6; }
+summary { cursor: pointer; }
+summary.cv__summary, summary.talk__summary {
+  display: flex; align-items: center; gap: 12px; padding: 14px;
+  list-style: none; color: #15558b; font-size: 14px;
+  background: linear-gradient(#fbfeff, #e9f6ff); box-shadow: inset 0 1px white;
+}
+summary::-webkit-details-marker { display: none; }
+summary::marker { content: ""; }
+summary:focus-visible { outline: 3px solid #174c85; outline-offset: -4px; border-radius: 8px; }
+summary:hover { background: #e7f5ff; }
+summary.cv__summary::after, summary.talk__summary::after {
+  content: "+"; margin-left: auto; flex-shrink: 0; font-size: 21px; font-weight: 400; line-height: 1;
+}
+details[open] > summary::after { content: "−"; }
+summary.talk__summary { display: grid; grid-template-columns: 1fr 18px; gap: 4px 14px; }
+.talk__left { grid-column: 1; font-weight: 500; }
+.talk__right { grid-column: 1; color: var(--muted); font-size: 12px; }
+summary.talk__summary::after { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+.cv__body, .talk__body { padding: 17px 14px; border-top: 1px solid #d6eaf6; font-size: 14px; }
+.talk__body p { margin-top: 7px; }
+.cv__section + .cv__section { margin-top: 21px; }
+.cv__section h3 { font-weight: 600; margin-bottom: 10px; }
+.cv__item { display: grid; grid-template-columns: 1fr; gap: 3px; padding: 9px 0; border-bottom: 1px solid #dcedf7; }
+.cv__what { min-width: 0; }
+.cv__when { color: var(--muted); font-size: 12px; }
+.cv__bullets { padding-left: 19px; list-style: disc; }
+.cv__item--teaching { display: grid; grid-template-columns: 1fr; row-gap: 3px; }
+.cv__item--teaching .cv__when { margin-bottom: 11px; padding-bottom: 10px; border-bottom: 1px solid #dcedf7; }
+.notes-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.note-item { align-items: flex-start; padding: 15px 12px; gap: 10px; }
+.note-title { font-size: 14px; line-height: 1.55; }
+.note-file-label { flex-shrink: 0; font-size: 10px; background: linear-gradient(#fff, #e8f6ff); }
+.note-arrow { flex-shrink: 0; padding-top: 8px; }
+.site-footer { margin-top: 4px; }
+
+/* 08. 콘텐츠별 모바일 조정 ----------------------------------------------- */
+@media (max-width: 1000px) {
+  .main-nav { gap: 7px; }
+  .nav-pill { min-width: 68px; padding-inline: 12px; }
+  .site-header { gap: 14px; }
+  .hero-copy { padding-left: 40px; }
+  .portrait { width: 86px; height: 86px; }
+  .about-content { gap: 16px; }
+}
+@media (max-width: 760px) {
+  :root { --hero-height: 345px; }
+  .hero-copy { width: 95%; padding: 38px 24px; }
+  .hero h1 { font-size: 44px; }
+  .hero-interests { margin-top: 17px; font-size: 14px; }
+  .details-grid { grid-template-columns: 1fr; }
+  .notes-list { grid-template-columns: 1fr; }
+  .about-content { min-height: 130px; }
+  .portrait { width: 100px; height: 100px; }
+  .note-item { align-items: center; }
+  .note-arrow { padding-top: 0; }
+}
+@media (max-width: 420px) {
+  .main-nav { gap: 5px; }
+  .nav-pill { min-width: 0; padding: 8px 5px; font-size: 12px; }
+  .hero-copy { width: 100%; padding: 31px 19px; }
+  .hero h1 { font-size: 39px; }
+  .hero-affiliation { max-width: 250px; }
+  .hero-actions { gap: 7px; }
+  .aqua-button { min-height: 42px; padding-inline: 11px; font-size: 12px; }
+  .portrait { width: 72px; height: 72px; }
+  .about-content { align-items: flex-start; gap: 13px; }
+  .contact-link { font-size: 12px; gap: 5px; }
+  .contact-link .icon { width: 16px; height: 16px; }
+  .publication { padding: 13px 9px; gap: 11px; }
+  .paper-number { width: 29px; height: 37px; font-size: 15px; }
+  .publication h3 { font-size: 15px; }
+}
+@media print {
+  .main-nav, .mail-button, .hero-actions, .illustration-tile { display: none; }
+  .hero-copy { padding: 20px; width: 100%; }
+  .content-grid { display: block; }
+  .content-panel { margin-top: 12px; }
+  .publication { break-inside: avoid; }
+  .notes-list { display: block; }
+  .note-item { margin-bottom: 8px; }
+}
